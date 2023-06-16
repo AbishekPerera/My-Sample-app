@@ -3,9 +3,12 @@ import jwt from "jsonwebtoken";
 
 import {
   adduser,
+  deleteUserById,
+  getById,
   getall,
   login,
   testapi,
+  updateUserById,
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -34,6 +37,9 @@ const authuser = async (req, res, next) => {
 router.get("/test", testapi);
 router.post("/", authuser, adduser);
 router.get("/", authuser, getall);
+router.get("/:id", authuser, getById);
+router.put("/:id", authuser, updateUserById);
+router.delete("/:id", authuser, deleteUserById);
 router.post("/login", login);
 
 export default router;

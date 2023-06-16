@@ -68,3 +68,58 @@ export const getall = async (req, res) => {
     res.status(400).json({ message: "bad request" });
   }
 };
+
+export const getById = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const gotuser = await user.findById(id);
+    res.status(200).json(gotuser);
+  } catch (e) {
+    res.status(404).json({ message: e.message });
+  }
+};
+
+export const updateUserById = async (req, res) => {
+  const id = req.params.id;
+  const requser = req.requser;
+  const { name, pass } = req.body;
+
+  try {
+    let updatedUser;
+
+    if (pass != null) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedpw = await bcrypt.hash(pass, salt);
+
+      updatedUser = await user.findByIdAndUpdate(id, {
+        name,
+        pass: hashedpw,
+        updatedby: requser.user,
+      });
+    } else {
+      updatedUser = await user.findByIdAndUpdate(id, {
+        name,
+        updatedby: requser.user,
+      });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+//delete user
+
+export const deleteUserById = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const deletedUser = await user.findByIdAndDelete(id);
+
+    res.status(200).json(deletedUser);
+  } catch (e) {
+    res.status(503).json({ message: e.message });
+  }
+};
