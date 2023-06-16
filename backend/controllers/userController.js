@@ -9,13 +9,17 @@ export const testapi = (req, res) => {
 //add user
 export const adduser = async (req, res) => {
   const { name, pass } = req.body;
+  const requser = req.requser;
 
   const salt = await bcrypt.genSalt(10);
   const hashedpw = await bcrypt.hash(pass, salt);
 
+  //   console.log(requser);
+
   const newUser = new user({
     name: name,
     pass: hashedpw,
+    createdby: requser.user,
   });
 
   try {
@@ -50,5 +54,17 @@ export const login = async (req, res) => {
     }
   } catch (e) {
     res.status(500).json({ message: "something went wrong", error: e.message });
+  }
+};
+
+//getall
+export const getall = async (req, res) => {
+  //   res.send("ela");
+
+  try {
+    const allUSers = await user.find();
+    res.status(200).json(allUSers);
+  } catch (e) {
+    res.status(400).json({ message: "bad request" });
   }
 };

@@ -12,6 +12,14 @@ const user = new userSchema(
       type: String,
       required: true,
     },
+    createdby: {
+      type: String,
+      default: "admin",
+    },
+    updatedby: {
+      type: String,
+      default: "admin",
+    },
   },
   {
     timestamps: true,
