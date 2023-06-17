@@ -1,0 +1,27 @@
+.login-form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav {
+  display: block;
+  justify-content: start;
+  background-color: aquamarine;
+}
+
+.navbar-links ul {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.navbar-links li {
+  list-style: none;
+  padding: auto;
+  margin: 15px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+}
