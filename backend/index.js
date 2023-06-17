@@ -15,7 +15,6 @@ app.use(cors());
 dotenv.config();
 
 const PORT = process.env.PORT || 8075;
-const myKey = process.env.myKey;
 const URL = process.env.DB_URL;
 
 // create db connection
